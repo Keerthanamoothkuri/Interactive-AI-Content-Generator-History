@@ -40,3 +40,39 @@ ai-content-generator/
 ├── frontend/
  └── app.py # Streamlit UI
 
+---
+
+## 🔧 How It Works
+
+1. The user enters a keyword or short description on the frontend.
+2. The Streamlit app sends this input to an API Gateway endpoint (`/generate`).
+3. The API triggers a Lambda function which:
+   - Builds a prompt like: _"Generate 5 marketing taglines about: [keyword]"_
+   - Sends it to Bedrock for AI generation
+   - Saves the input + output to DynamoDB
+4. The response is displayed to the user.
+5. Another Lambda function (`/history`) allows fetching and deleting past content.
+
+---
+
+<img width="955" alt="image" src="https://github.com/user-attachments/assets/8c10f31e-dfa6-4730-b268-7631c2608012" />
+<img width="820" alt="image" src="https://github.com/user-attachments/assets/bb137ad9-7b1b-49e3-9c72-703c8b3b6a41" />
+
+---
+
+## ✅ Requirements
+
+- Python 3.10+
+- AWS account with:
+  - Bedrock model access (Claude or Titan)
+  - Permissions for DynamoDB, Lambda, API Gateway
+- Streamlit installed locally
+
+Install Python packages:
+
+```bash
+pip install streamlit requests boto3
+
+Run the frontend:
+cd ai-content-generator/frontend
+streamlit run app.py
